@@ -1,0 +1,28 @@
+/**
+  * vee-validate v2.2.15
+  * (c) 2020 Abdelrahman Awad
+  * @license MIT
+  */
+var validate = function (value, ref) {
+  var expression = ref.expression;
+
+  if (typeof expression === 'string') {
+    expression = new RegExp(expression);
+  }
+
+  if (Array.isArray(value)) {
+    return value.every(function (val) { return validate(val, { expression: expression }); });
+  }
+
+  return expression.test(String(value));
+};
+
+var paramNames = ['expression'];
+
+var regex = {
+  validate: validate,
+  paramNames: paramNames
+};
+
+export default regex;
+export { paramNames, validate };

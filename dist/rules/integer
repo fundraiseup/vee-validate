@@ -1,0 +1,19 @@
+/**
+  * vee-validate v2.2.15
+  * (c) 2020 Abdelrahman Awad
+  * @license MIT
+  */
+var validate = function (value) {
+  if (Array.isArray(value)) {
+    return value.every(function (val) { return /^-?[0-9]+$/.test(String(val)); });
+  }
+
+  return /^-?[0-9]+$/.test(String(value));
+};
+
+var integer = {
+  validate: validate
+};
+
+export default integer;
+export { validate };

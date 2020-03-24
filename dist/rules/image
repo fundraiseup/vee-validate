@@ -1,0 +1,13 @@
+/**
+  * vee-validate v2.2.15
+  * (c) 2020 Abdelrahman Awad
+  * @license MIT
+  */
+var validate = function (files) { return (Array.isArray(files) ? files : [files]).every(function (file) { return /\.(jpg|svg|jpeg|png|bmp|gif)$/i.test(file.name); }); };
+
+var image = {
+  validate: validate
+};
+
+export default image;
+export { validate };

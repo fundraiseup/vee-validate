@@ -1,0 +1,24 @@
+/**
+  * vee-validate v2.2.15
+  * (c) 2020 Abdelrahman Awad
+  * @license MIT
+  */
+var validate = function (value, ref) {
+  var targetValue = ref.targetValue;
+
+  return String(value) === String(targetValue);
+};
+var options = {
+  hasTarget: true
+};
+
+var paramNames = ['targetValue'];
+
+var confirmed = {
+  validate: validate,
+  options: options,
+  paramNames: paramNames
+};
+
+export default confirmed;
+export { options, paramNames, validate };
