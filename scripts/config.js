@@ -44,13 +44,15 @@ const utils = {
     let outputPath = path.join(paths.dist, fileName);
     fs.writeFileSync(outputPath, code);
     let stats = this.stats({ code, path: outputPath });
+    // eslint-disable-next-line no-console
     console.log(`${chalk.green('Output File:')} ${fileName} ${stats}`);
 
     if (minify) {
-      let minifiedFileName = fileName.replace('.js', '') + '.min.js';
+      const minifiedFileName = fileName.replace('.js', '') + '.min.js';
       outputPath = path.join(paths.dist, minifiedFileName);
       fs.writeFileSync(outputPath, uglify.minify(code, commons.uglifyOptions).code);
       stats = this.stats({ code, path: outputPath });
+      // eslint-disable-next-line no-console
       console.log(`${chalk.green('Output File:')} ${minifiedFileName} ${stats}`);
     }
 
@@ -91,11 +93,25 @@ const builds = {
     input: 'src/index.minimal.esm.js',
     format: 'es'
   },
+  esmOnlyDirective: {
+    input: 'src/index.only-directive.esm.js',
+    format: 'es'
+  },
   rules: {
     input: 'src/rules/index.js',
-    format: 'es'
-  }
+    format: 'es',
+  },
 };
+
+fs.readdirSync(path.join(__dirname, '..', 'src/rules'))
+  .filter(file => file.endsWith('.js'))
+  .forEach(file => {
+    const key = 'rules:' + file.replace('.js', '');
+    builds[key] = {
+      input: 'src/rules/' + file,
+      format: 'es',
+    };
+  });
 
 function genConfig (options) {
   const config = {
